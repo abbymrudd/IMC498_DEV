@@ -1,3 +1,5 @@
+<!-- THIS CREATES THE CONTENT INDICATING CART TOTALS AND WELCOME AT TOP OF WEBPAGE USING A PHP FUNCTION -->
+
 <?php
 	if(isset($_POST['name'])) {
 	     
@@ -11,14 +13,23 @@
 		 
 ?>
 
+
+<!-- THIS BEGINS THE HTML PORTION OF THE CODE -->
+
 <html>
-<!--THIS IS HTML COMMENT SYNTAX -->
+
+<!--THIS IS HOW HTML COMMENT SYNTAX LOOKS -->
 
  <head>
 
+<!-- THE FOLLOWING CODE IS SETTING UP THE GOOGLE ANALYTICS TRACKER AND POP UP WINDOW USING JAVASCRIPT -->
  
  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
  <script src="http://www.imcanalytics.com/js/jquery.popupoverlay.js"></script>
+ 
+ 
+<!-- THIS SETS SIZES FOR EACH SECTION OF TEXT/IMAGE (FORMAT). TEXT BOX WINDOWS ARE SIZED FIRST THEN COLOR AND MARGINS ARE SET. -->
+
  <style>
  section {
     width: 90%;
@@ -92,6 +103,9 @@
 }
 </style>
 
+
+<!--THIS BEGINS COOKIE CREATION IN JAVASCRIPT -->
+
 <script>
     
     $(document).ready(function() {
@@ -108,13 +122,62 @@
 
 <script language="JavaScript">
 
-//This is JS comment syntax.
-//cookie will go here.
+//TWO FUNCTIONS TO SET THE COOKIE USING JAVASCRIPT.
+
+//THIS FIRST FUNCTION RUNS WHEN SUBMIT IS PRESSED. IT COLLECTS DATA FROM THE FORM
+
+function mixCookie() {
+
+      var name = document.forms["form1"]["name"].value;
+
+        bakeCookie("readuser", name, 365);
+      
+   }
+   
+function bakeCookie(cname, cvalue1, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+d.toGMTString();
+    document.cookie = cname + "=" + cvalue1 + ";" + expires;
+}
+
+//THE SECOND FUNCTION CHECKS BROWSER FOR COOKIE FOR EACH USER. GER COOKIE BRINGS UP THE SAVED INFORMATION (NAME) IF COOKIE FOUND
+
+function checkCookie() {
+
+    var userdeets = getCookie("readuser");
+    if (userdeets != "") {
+      var deets = userdeets.split("%-");
+    var user = deets[0];
+    //namediv.innerHTML = '';
+    greeting.innerHTML = 'Welcome ' + user;
+    //document.getElementById('deletecookie').style.display = "block";
+  } else { return "";
+  }
+}
+
+function getCookie(cname) {
+
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i].trim();
+        if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+    }
+    return "";
+}
 
 </script>
 
  </head>
- <body>
+
+<!-- THIS PROPELY INSERTS THE COOKIE -->
+ 
+ <body onload="checkCookie()">
+
+
+<!--THE FOLLOWING SECTIONS CREATE THR CONTENT TO BE DISPLAYED ON THE WEBPAGE WITH PRIOR ESTABLISHED FORMAT (AT TOP OF CODE). IT USES COLOR SPECIFICATIONS AND INSERTS IMAGES-->
+  
  <div style="width:100%; height:25%; background-color:#57585A;">
  <img src="img/ic1.jpg" style="max-height: 100%;">
     <div style="float:right; margin-right:75px;margin-top:10px; color:white;"> Cart: <?php echo $CARTCOUNT ?> </div>
